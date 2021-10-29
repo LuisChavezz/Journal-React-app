@@ -1,7 +1,7 @@
-html, body {
-    background-color: #15202B;
-}
 
-h1 {
-    color: white;
+@import './base/settings';
+@import './base/base';
+
+body {
+    background-color: $primary;
 }
