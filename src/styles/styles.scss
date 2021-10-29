@@ -2,6 +2,5 @@
 @import './base/settings';
 @import './base/base';
 
-body {
-    background-color: $primary;
-}
+//Components
+@import './components/auth';
