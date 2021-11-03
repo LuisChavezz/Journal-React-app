@@ -1,4 +1,4 @@
-
+//auth router
 .auth__main {
     display: flex;
     justify-content: center;
@@ -17,4 +17,47 @@
     border-radius: 2px;
     padding: 20px;
     width: 250px;
+}
+
+//auth login
+.auth__title {
+    color: darken($color: $primary, $amount: 10);
+    margin-bottom: 20px;
+}
+
+.auth__input {
+    color: $dark-grey;
+    border: 0px;
+    border-bottom: 1px solid $light-grey;
+    font-size: 16px;
+    margin-bottom: 10px;
+    height: 20px;
+    width: 100%;
+
+    transition: border-bottom .3s ease;
+
+    &:focus { //todo lo anterior en 'focus'
+        outline: none;
+        border-bottom: 1px solid $primary;
+    }
+}
+
+.auth_social-networks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    padding: 20px 0px;
+    width: 100%;
+}
+
+.auth__alert-error {
+    background-color: red;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 5px;
 }
