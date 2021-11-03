@@ -14,7 +14,7 @@ export const LoginScreen = () => {
                 <input 
                     type="text" 
                     placeholder="Email"
-                    name="name"
+                    name="email"
                     autoComplete="off"
                     className="auth__input"
                 />
@@ -47,7 +47,7 @@ export const LoginScreen = () => {
                     </div>
                 </div>
 
-                <Link to="/register" className="link" >
+                <Link to="/auth/register" className="link" >
                     Creater new account
                 </Link>
             </form>
