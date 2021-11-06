@@ -11,7 +11,8 @@ export const JournalEntry = () => {
                 className="journal__entry-picture"
                 style={{
                     backgroundSize: 'cover',
-                    backgroundImage: 'url(https://cdn4.josefacchin.com/wp-content/uploads/2020/02/como-quitar-el-fondo-de-una-imagen.png)'
+                    backgroundImage: 'url(https://cdn4.josefacchin.com/wp-content/uploads/2020/02/como-quitar-el-fondo-de-una-imagen.png)',
+                    backgroundPositionX: 'center'
                 }}
             ></div>
 
