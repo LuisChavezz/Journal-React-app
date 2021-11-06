@@ -6,10 +6,15 @@
     cursor: pointer;
     font-size: 12px;
     padding: 7px 10px;
-    margin-bottom: 15px;
+
+    transition: color .3s ease;
 
     &:focus {
         outline: none;        
+    }
+
+    &:hover {
+        color: darken($color: white, $amount: 10);
     }
 }
 
