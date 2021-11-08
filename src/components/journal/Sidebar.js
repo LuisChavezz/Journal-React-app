@@ -9,8 +9,8 @@ export const Sidebar = () => {
 
     return (
         <aside className="journal__sidebar">
-            <div className="journal__sidebar-navbar">
-                <h3 className="mt-5">
+            <div className="journal__sidebar-navbar mt-1">
+                <h3>
                     <i className="far fa-moon"></i>
                     <span> Luigiberto</span>
                 </h3>
