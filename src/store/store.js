@@ -1,7 +1,7 @@
 import { createStore, combineReducers } from "redux";
 import { authReducer } from "../reducers/authReducer";
 
-
+// reducer a utilizar en la aplicación
 const reducers = combineReducers({
     auth: authReducer,
 });
