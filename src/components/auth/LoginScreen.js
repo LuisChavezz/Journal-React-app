@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { useForm } from '../../hooks/useForm'
-import { /*login,*/ startGoogleLogin, startLoginEmailPassword } from '../../actions/auth'
+import { startGoogleLogin, startLoginEmailPassword } from '../../actions/auth'
 
 export const LoginScreen = () => {
 
