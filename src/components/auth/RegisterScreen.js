@@ -1,11 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import validator from 'validator'
 
 import { useForm } from '../../hooks/useForm'
+import { removeError, setError } from '../../actions/ui'
 
 export const RegisterScreen = () => {
     
+    // hook de react-redux que hace los dispatch de las acciones (actions)
+    const dispatch = useDispatch();
+
     // useForm (custom hook)
     const [ formValues, handleInputChange, reset ] = useForm({
         name: '',
@@ -30,18 +35,19 @@ export const RegisterScreen = () => {
     // Validación del formulario con 'validator'
     const isFormValid = () => {
         if( validator.isEmpty( name ) ){
-            console.log( 'Invalid name' );
+            dispatch( setError( 'Invalid name' ) );
             return false;
 
         } else if( !validator.isEmail(email) ) {
-            console.log( 'Invalid email' );
+            dispatch( setError( 'Invalid email' ) );
             return false;
 
         } else if( ( !validator.equals( password, password2 ) ) || ( password.length < 5 )) {
-            console.log( 'Invalid password' );
+            dispatch( setError( 'Invalid password' ) );
             return false;
         }
         
+        dispatch( removeError() );;
         return true;
     }
     
@@ -51,9 +57,12 @@ export const RegisterScreen = () => {
 
             <form onSubmit={ handleRegister }>
 
-                <div className="auth__alert-error">
-                    Error!
-                </div>
+                {
+                    ( !isFormValid ) &&
+                        (<div className="auth__alert-error">
+                            Error!
+                        </div>)
+                }
 
                 <input 
                     type="text" 
