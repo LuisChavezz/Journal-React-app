@@ -19,6 +19,7 @@ export const LoginScreen = () => {
     const { email, password } = formValues;
 
 
+    // Inicio de sesión con correo y contraseña
     const handleLogin = (e) => { // onSubmit event
         e.preventDefault();
 
@@ -27,7 +28,8 @@ export const LoginScreen = () => {
         reset();
     }
 
-    const handleGoogleLogin = () => {
+    // Inicio de sesión con Gooogle
+    const handleGoogleLogin = () => { //onClick event
         dispatch( startGoogleLogin() );
     }
     
