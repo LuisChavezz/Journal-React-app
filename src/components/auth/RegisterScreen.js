@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import validator from 'validator'
 
@@ -10,6 +10,9 @@ export const RegisterScreen = () => {
     
     // hook de react-redux que hace los dispatch de las acciones (actions)
     const dispatch = useDispatch();
+
+    // Extrayendo 'msgError' del state del store
+    const { msgError } = useSelector( state => state.ui ); // Tiene acceso a la información del estado de la Store
 
     // useForm (custom hook)
     const [ formValues, handleInputChange, reset ] = useForm({
@@ -58,10 +61,12 @@ export const RegisterScreen = () => {
             <form onSubmit={ handleRegister }>
 
                 {
-                    ( !isFormValid ) &&
-                        (<div className="auth__alert-error">
-                            Error!
-                        </div>)
+                    ( msgError ) &&
+                        (
+                            <div className="auth__alert-error">
+                                { msgError }
+                            </div>
+                        )
                 }
 
                 <input 
