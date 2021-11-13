@@ -1,22 +1,32 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "@firebase/auth";
 import { googleAuthProvider } from "../firebase/firebase-config";
+
 import { types } from "../types/types"
+import { finishLoading, startLoading } from "./ui";
 
 
 export const startLoginEmailPassword = ( email, password ) => {
     
     return ( dispatch ) => {
+        dispatch( startLoading() ); // bloquea el botón
         const auth = getAuth();
 
         signInWithEmailAndPassword( auth, email, password )
             .then( ( {user} ) => {
 
                 dispatch( login( user.uid, user.displayName ) );
-
+                
             })
             .catch( e => {
                 console.log(e) //imprime el error recibido en la promesa
             })
+            .finally( () => { //cuando se termina la promesa
+                dispatch( finishLoading() ); // desbloquea el botón
+            })
+        
+        // setTimeout(() => {
+        //     dispatch( finishLoading() );
+        // }, 1500);
     }
 }
 
@@ -54,6 +64,7 @@ export const startGoogleLogin = () => {
     }
 }
 
+// action
 export const login = ( uid, displayName ) => {
     
     return {

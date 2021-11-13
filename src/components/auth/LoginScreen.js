@@ -12,8 +12,9 @@ export const LoginScreen = () => {
     // hook de react-redux que hace los dispatch de las acciones (actions)
     const dispatch = useDispatch();
 
-    // Extrayendo 'msgError' del state del store
+    // Extrayendo información del state del store
     const { msgError } = useSelector( state => state.ui ); // Tiene acceso a la información del estado de la Store
+    const { loading } = useSelector( state => state.ui ); // Tiene acceso a la información del estado de la Store
 
     // useForm (custom hook)
     const [ formValues, handleInputChange, reset ] = useForm({
@@ -95,7 +96,7 @@ export const LoginScreen = () => {
                 <button
                     type="submit"
                     className="btn btn-primary btn-block"
-                    // disabled={true}
+                    disabled={ loading }
                 >
                     Login
                 </button>
