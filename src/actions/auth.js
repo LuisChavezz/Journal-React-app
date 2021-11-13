@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithPopup, updateProfile } from "@firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "@firebase/auth";
 import { googleAuthProvider } from "../firebase/firebase-config";
 import { types } from "../types/types"
 
@@ -6,9 +6,17 @@ import { types } from "../types/types"
 export const startLoginEmailPassword = ( email, password ) => {
     
     return ( dispatch ) => {
-        setTimeout(() => {
-            dispatch( login( email, password ) );
-        }, 3500);
+        const auth = getAuth();
+
+        signInWithEmailAndPassword( auth, email, password )
+            .then( ( {user} ) => {
+
+                dispatch( login( user.uid, user.displayName ) );
+
+            })
+            .catch( e => {
+                console.log(e) //imprime el error recibido en la promesa
+            })
     }
 }
 
@@ -22,7 +30,7 @@ export const startRegisterWithNameEmailPassword = ( name, email, password ) => {
 
                 await updateProfile( user, { displayName: name } );
 
-                console.log(user);
+                // console.log(user);
 
                 dispatch( login( user.uid, user.displayName ) );
 

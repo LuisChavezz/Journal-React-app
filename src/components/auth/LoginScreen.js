@@ -1,14 +1,19 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import validator from 'validator'
 
 import { useForm } from '../../hooks/useForm'
+import { removeError, setError } from '../../actions/ui'
 import { startGoogleLogin, startLoginEmailPassword } from '../../actions/auth'
 
 export const LoginScreen = () => {
 
     // hook de react-redux que hace los dispatch de las acciones (actions)
     const dispatch = useDispatch();
+
+    // Extrayendo 'msgError' del state del store
+    const { msgError } = useSelector( state => state.ui ); // Tiene acceso a la información del estado de la Store
 
     // useForm (custom hook)
     const [ formValues, handleInputChange, reset ] = useForm({
@@ -23,9 +28,11 @@ export const LoginScreen = () => {
     const handleLogin = (e) => { // onSubmit event
         e.preventDefault();
 
-        dispatch( startLoginEmailPassword( email, password) );
+        if ( isFormValid() ) { // Sí el formulario es válido
+            dispatch( startLoginEmailPassword( email, password) );
 
-        reset();
+            reset();
+        }
     }
 
     // Inicio de sesión con Gooogle
@@ -33,18 +40,44 @@ export const LoginScreen = () => {
         dispatch( startGoogleLogin() );
     }
     
+    // Validación del formulario con 'validator'
+    const isFormValid = () => {
+
+        if( !validator.isEmail(email) ) {
+            dispatch( setError( 'Invalid email' ) );
+            return false;
+
+        } else if( password.length < 5 ) {
+            dispatch( setError( 'Invalid password' ) );
+            return false;
+        }
+        
+        dispatch( removeError() );;
+        return true;
+    }
+
+
     return (
         <div>
             <h3 className="auth__title">Login</h3>
 
 
             <form onSubmit={ handleLogin }>
+
+                {
+                    ( msgError ) &&
+                        (
+                            <div className="auth__alert-error">
+                                { msgError }
+                            </div>
+                        )
+                }
+
                 <input 
                     type="text" 
                     placeholder="Email"
                     name="email"
                     autoComplete="off"
-                    required
                     className="auth__input"
                     value={ email }
                     onChange={ handleInputChange }
@@ -54,7 +87,6 @@ export const LoginScreen = () => {
                     type="password" 
                     placeholder="Password"
                     name="password"
-                    required
                     className="auth__input"
                     value={ password }
                     onChange={ handleInputChange }
