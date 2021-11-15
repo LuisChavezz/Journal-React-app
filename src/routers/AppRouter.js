@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     BrowserRouter as Router,
     Switch,
@@ -17,20 +17,38 @@ export const AppRouter = () => {
     
     const dispatch = useDispatch();
 
+    const [checking, setChecking] = useState(true); // estado que indica si está autenticado o no
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // estado para verificar si está autenticado y proteger las rutas
+
     //Iniciar sesión sí ya esta loggeado
     useEffect( () => {
         const auth = getAuth();
 
         onAuthStateChanged( auth, ( user ) => { // "observable" que se dispara cada que el usuario se loggea
 
+            // Sí está loggeado
             if ( user?.uid ) { // sí 'user' existe y conntiene un 'uid'
                 dispatch( login( user.uid, user.displayName ) );
+                setIsLoggedIn( true );
+            
+            } else {
+                setIsLoggedIn( false );
             }
+
+            // Después de la verificación
+            setChecking( false );
 
         });
         
-    }, [ dispatch ] );
+    }, [ dispatch, setChecking, setIsLoggedIn ] );
     
+    
+    if ( checking ) {
+        return (
+            <h1>Wait a moment please...</h1>
+        )
+    }
+
     return (
         <Router>
             <Switch>
