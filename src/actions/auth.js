@@ -60,7 +60,10 @@ export const startGoogleLogin = () => {
         signInWithPopup( auth, googleAuthProvider)
             .then( ( {user} ) => {
                 dispatch( login( user.uid, user.displayName ) );
-            });
+            })
+            .catch( e => {
+                console.log(e) //imprime el error recibido en la promesa
+            })
     }
 }
 
