@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "@firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "@firebase/auth";
 import { googleAuthProvider } from "../firebase/firebase-config";
 
 import { types } from "../types/types"
@@ -64,7 +64,19 @@ export const startGoogleLogin = () => {
     }
 }
 
-// action
+export const startLogout = () => {
+
+    return async( dispatch ) => {
+        const auth = getAuth();
+
+        await signOut( auth );
+
+        dispatch( logout() );
+    }
+}
+
+
+// actions
 export const login = ( uid, displayName ) => {
     
     return {
@@ -74,5 +86,12 @@ export const login = ( uid, displayName ) => {
             uid,
             displayName
         }
+    }
+}
+
+export const logout = () => {
+    
+    return {
+        type: types.logout,
     }
 }
