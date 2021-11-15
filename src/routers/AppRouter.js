@@ -42,21 +42,38 @@ export const AppRouter = () => {
         
     }, [ dispatch, setChecking, setIsLoggedIn ] );
     
-    
+
     if ( checking ) {
         return (
-            <h1>Wait a moment please...</h1>
+            <h4>Wait a moment please...</h4>
         )
     }
 
     return (
         <Router>
             <Switch>
-                <Route path="/auth" component={ AuthRouter } />
+                {
+                    isLoggedIn ?
+                    (
+                        <>
+                            <Route exact path="/" component={ JournalScreen } />
+                            <Redirect to="/" />
+                        </>
+                    ) :
+
+                    (
+                        <>
+                            <Route path="/auth" component={ AuthRouter } />
+                            <Redirect to="/auth/login" />
+                        </>
+                    )
+                }
+
+                {/* <Route path="/auth" component={ AuthRouter } />
 
                 <Route exact path="/" component={ JournalScreen } />
 
-                <Redirect to="/auth/login" />
+                <Redirect to="/auth/login" /> */}
             </Switch>
         </Router>
     )
