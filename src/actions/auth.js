@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "@firebase/auth";
 import { googleAuthProvider } from "../firebase/firebase-config";
+import Swal from 'sweetalert2'
 
 import { types } from "../types/types"
 import { finishLoading, startLoading } from "./ui";
@@ -18,6 +19,7 @@ export const startLoginEmailPassword = ( email, password ) => {
                 
             })
             .catch( e => {
+                Swal.fire('Error', 'Usuario y/o contraseña son incorrectos' ,'error');
                 console.log(e) //imprime el error recibido en la promesa
             })
             .finally( () => { //cuando se termina la promesa
@@ -46,6 +48,7 @@ export const startRegisterWithNameEmailPassword = ( name, email, password ) => {
 
             })
             .catch( e => {
+                Swal.fire('Error', 'Firebase: Error! Read the console for more details.' ,'error');
                 console.log(e) //imprime el error recibido en la promesa
             })
     }
@@ -62,6 +65,7 @@ export const startGoogleLogin = () => {
                 dispatch( login( user.uid, user.displayName ) );
             })
             .catch( e => {
+                // Swal.fire('Error', 'Usuario y/o contraseña son incorrectos' ,'error');
                 console.log(e) //imprime el error recibido en la promesa
             })
     }
