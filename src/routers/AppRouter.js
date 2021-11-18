@@ -15,6 +15,7 @@ import { login } from '../actions/auth';
 
 export const AppRouter = () => {
     
+    // hook de react-redux que hace los dispatch de las acciones (actions)
     const dispatch = useDispatch();
 
     const [checking, setChecking] = useState(true); // estado que indica si está autenticado o no
