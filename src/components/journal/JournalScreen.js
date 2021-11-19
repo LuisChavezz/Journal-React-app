@@ -20,8 +20,6 @@ export const JournalScreen = () => {
                         ? ( <NoteScreen /> )
                         : ( <NothingSelected /> )
                 }
-
-                <NoteScreen />
             </main>
         </div>
     )
