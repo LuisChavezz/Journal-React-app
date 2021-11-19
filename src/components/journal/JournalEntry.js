@@ -1,9 +1,9 @@
 import React from 'react'
+import moment from 'moment';
 
-
-export const JournalEntry = () => {
+export const JournalEntry = ( { id, date, title, body, url } ) => {
     
-    
+    const noteDate = moment(date);
     
     return (
         <div className="journal__entry">
@@ -11,23 +11,23 @@ export const JournalEntry = () => {
                 className="journal__entry-picture"
                 style={{
                     backgroundSize: 'cover',
-                    backgroundImage: 'url(https://cdn4.josefacchin.com/wp-content/uploads/2020/02/como-quitar-el-fondo-de-una-imagen.png)',
+                    backgroundImage: `url(${url})`,
                     backgroundPositionX: 'center'
                 }}
             ></div>
 
             <div className="journal__entry-body">
                 <p className="journal__entry-title">
-                    Un nuevo día                    
+                    { title }                 
                 </p>
                 <p className="journal_entry-content">
-                    Lorem Ipsum wdbibvuivbdvba
+                    { body }
                 </p>
             </div>
 
             <div className="journal__entry-date-box">
-                <span>Monday</span>
-                <h4>28</h4>
+                <span>{ noteDate.format('dddd') }</span>
+                <h4>{ noteDate.format('Do') }</h4>
             </div>
         </div>
     )
