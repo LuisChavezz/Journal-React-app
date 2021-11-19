@@ -11,8 +11,7 @@ import { useDispatch } from 'react-redux';
 import { AuthRouter } from './AuthRouter';
 import { JournalScreen } from '../components/journal/JournalScreen';
 import { login } from '../actions/auth';
-import { loadNotes } from '../helpers/loadNotes';
-import { setNotes } from '../actions/notes';
+import { startLoadingNotes } from '../actions/notes';
 
 
 export const AppRouter = () => {
@@ -33,10 +32,7 @@ export const AppRouter = () => {
             if ( user?.uid ) { // sí 'user' existe y conntiene un 'uid'
                 dispatch( login( user.uid, user.displayName ) );
                 setIsLoggedIn( true );
-
-                // Obtener las notas de Firestone
-                const notes = await loadNotes( user.uid ); // 'uid' = id del usuario loggeado
-                dispatch( setNotes( notes ));
+                dispatch( startLoadingNotes( user.uid ) );
             
             } else {
                 setIsLoggedIn( false );
