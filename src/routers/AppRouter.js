@@ -33,7 +33,7 @@ export const AppRouter = () => {
                 dispatch( login( user.uid, user.displayName ) );
                 setIsLoggedIn( true );
                 dispatch( startLoadingNotes( user.uid ) );
-            
+                
             } else {
                 setIsLoggedIn( false );
             }
