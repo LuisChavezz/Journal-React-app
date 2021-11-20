@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, query } from "@firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, updateDoc } from "@firebase/firestore";
 import { db } from "../firebase/firebase-config"
 
 import { types } from "../types/types";
@@ -43,6 +43,24 @@ export const startLoadingNotes = ( uid ) => {
         });
 
         dispatch( setNotes( notes ));
+    }
+}
+
+export const startSaveNote = ( note ) => {
+
+    return async ( dispatch, getState ) => {
+        
+        const { uid } = getState().auth; // getState nos regresa el estado completo del store
+
+        if ( !note.url ) { // elimina el url del objeto, si este no existe
+            delete note.url;
+        }
+
+        const noteToFirestore = {...note};
+        delete noteToFirestore.id; // elimina el id de el objeto 'note'
+
+        const noteRef = doc(db, `${uid}/journal/notes/${note.id}`);
+        await updateDoc( noteRef, noteToFirestore );
     }
 
 }
