@@ -36,8 +36,18 @@
     }
 }
 
-//estilo del botón de google
+.btn-danger {
+    background-color: #8b0000;
+    height: 50px;
 
+    transition: background-color .3s ease;
+
+    &:hover {
+        background-color: darken($color: #8b0000, $amount: 10);
+    }
+}
+
+//estilo del botón de googl
 
 .google-btn {
     cursor: pointer;

@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDocs, query, updateDoc } from "@firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc } from "@firebase/firestore";
 import { db } from "../firebase/firebase-config";
 import Swal from "sweetalert2";
 
@@ -117,6 +117,22 @@ export const startUploadingImage = ( file ) => {
     }
 }
 
+export const startDeleteNote = ( id ) => {
+
+    return async( dispatch, getState ) => {
+
+        const { uid } = getState().auth;
+
+        const noteRef = doc( db, `${uid}/journal/notes/${id}` )
+        await deleteDoc( noteRef );
+ 
+        dispatch( deleteNote( id ));
+
+        Swal.fire('Note deleted!', 'The note has been deleted.', 'success' );
+    }
+
+}
+
 // actions
 export const activeNote = ( id, note ) =>{
 
@@ -151,6 +167,15 @@ export const refreshNote = ( id, note ) => {
                 ...note
             }
         }
+    }
+}
+
+export const deleteNote = ( id ) => {
+
+    return {
+        type: types.notesDelete,
+
+        payload: id
     }
 
 }

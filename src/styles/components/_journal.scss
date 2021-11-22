@@ -51,10 +51,11 @@
      border-radius: 4px;
      color: $dark-grey;
      display: flex;
+     justify-content: space-between;
      margin-bottom: 10px;
      overflow: hidden;
      cursor: pointer;
-
+     padding: 0px 3px;
 }
 
 .journal__entry-picture {
