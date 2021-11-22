@@ -61,7 +61,7 @@ export const NoteScreen = () => {
                         && ( 
                             <div className="notes__image">
                                 <img 
-                                    src="https://pbs.twimg.com/media/Exq5isDW8AIHqzd?format=jpg&name=large"
+                                    src={ note.url }
                                     alt="random_image"
                                 />
                             </div> 

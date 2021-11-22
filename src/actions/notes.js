@@ -75,6 +75,18 @@ export const startUploadingImage = ( file ) => {
         
         const { active: activeNote } = getState().notes; // getState nos regresa información del store
 
+        // Alerta de 'Cargando...'
+        Swal.fire({
+            title: 'Uploading...',
+            text: 'Please wait...',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+
         const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dshn8thfr/upload'
         const formData = new FormData();
         formData.append('upload_preset', 'react-journal');
@@ -89,7 +101,8 @@ export const startUploadingImage = ( file ) => {
 
             if ( response.ok ) { // si la petición es correcta
                 const cloudResponse = await response.json();
-                console.log( cloudResponse.secure_url ); // url del archivo subido a Cloudinary
+                activeNote.url = cloudResponse.secure_url;
+                dispatch( startSaveNote( activeNote ) );
 
             } else { 
                 throw await response.json();
@@ -99,8 +112,9 @@ export const startUploadingImage = ( file ) => {
             throw error;
         }
 
-    }
 
+        Swal.close(); // Cierra la alerta 'Cargando...'
+    }
 }
 
 // actions
