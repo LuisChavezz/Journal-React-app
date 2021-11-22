@@ -32,7 +32,7 @@ export const startLoadingNotes = ( uid ) => {
 
     return async ( dispatch ) => {
 
-        // función para obtener registros de la DB de Firestone.
+        // función para obtener registros de la DB de Firestore.
         const notesSnap = await getDocs( query( collection(db, `${ uid }/journal/notes` ) ) );
         const notes = [];
     
@@ -67,6 +67,40 @@ export const startSaveNote = ( note ) => {
 
         Swal.fire('Note saved!', note.title, 'success' );
     }
+}
+
+export const startUploadingImage = ( file ) => {
+
+    return async( dispatch, getState ) => {
+        
+        const { active: activeNote } = getState().notes; // getState nos regresa información del store
+
+        const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dshn8thfr/upload'
+        const formData = new FormData();
+        formData.append('upload_preset', 'react-journal');
+        formData.append('file', file);
+
+        try {
+            //petición post a nuestro cloudinary
+            const response = await fetch( cloudinaryUrl, {
+                method: 'POST',
+                body: formData // file(img) & upload_preset
+            });
+
+            if ( response.ok ) { // si la petición es correcta
+                const cloudResponse = await response.json();
+                console.log( cloudResponse.secure_url ); // url del archivo subido a Cloudinary
+
+            } else { 
+                throw await response.json();
+            }
+
+        } catch (error) {
+            throw error;
+        }
+
+    }
+
 }
 
 // actions
